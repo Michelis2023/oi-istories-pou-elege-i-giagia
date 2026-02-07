@@ -1,143 +1,633 @@
+/* ============================================
+   Οι ιστορίες που έλεγε η γιαγιά - Επαγγελματικό CSS
+   Σχεδιασμός: Μοντέρνα ελληνική λογοτεχνική αισθητική
+   ============================================ */
+
+/* Google Fonts - Ελληνικές γραμματοσειρές */
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap');
+
 :root {
-  --bg: #f7f3e9;
-  --text: #222222;
-  --accent: #7b5b3b;
-  --accent-soft: #d4c2a3;
-  --max-width: 760px;
-  --line-height: 1.7;
+  /* Χρωματική παλέτα - Εμπνευσμένη από την ελληνική γη */
+  --primary-bg: #faf8f3;
+  --secondary-bg: #f4f0e8;
+  --text-primary: #2c2416;
+  --text-secondary: #5a4a3a;
+  --accent-gold: #b8935e;
+  --accent-deep: #7b5b3b;
+  --accent-light: #d4c2a3;
+  --border-soft: #e6dcc8;
+  --shadow-subtle: rgba(123, 91, 59, 0.08);
+  --shadow-medium: rgba(123, 91, 59, 0.15);
+  
+  /* Τυπογραφία */
+  --font-display: 'Crimson Pro', 'Noto Serif', Georgia, serif;
+  --font-body: 'Lora', 'Noto Serif', Georgia, serif;
+  --font-accent: 'Noto Serif', Georgia, serif;
+  
+  /* Μεγέθη */
+  --max-width: 820px;
+  --max-width-narrow: 720px;
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2.5rem;
+  --spacing-xl: 4rem;
+  
+  /* Ρυθμός γραμμής */
+  --line-height-tight: 1.4;
+  --line-height-normal: 1.7;
+  --line-height-loose: 1.85;
+  
+  /* Μεταβάσεις */
+  --transition-fast: 0.2s ease;
+  --transition-smooth: 0.3s ease-out;
 }
+
+/* ============================================
+   Reset & Base Styles
+   ============================================ */
 
 *, *::before, *::after {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 html {
   font-size: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
 }
 
 body {
-  margin: 0;
-  padding: 0;
-  font-family: "Georgia", "Times New Roman", serif;
-  color: var(--text);
-  background: var(--bg);
-  line-height: var(--line-height);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  color: var(--text-primary);
+  background: linear-gradient(to bottom, var(--primary-bg) 0%, var(--secondary-bg) 100%);
+  background-attachment: fixed;
+  line-height: var(--line-height-loose);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-/* Κεντρικό δοχείο */
+/* Επιλογή κειμένου */
+::selection {
+  background: var(--accent-light);
+  color: var(--text-primary);
+}
+
+::-moz-selection {
+  background: var(--accent-light);
+  color: var(--text-primary);
+}
+
+/* ============================================
+   Typography
+   ============================================ */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: var(--line-height-tight);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-sm);
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--spacing-md);
+}
+
+h2 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin-top: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
+  color: var(--accent-deep);
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(to right, var(--accent-gold), transparent);
+  border-radius: 2px;
+}
+
+h3 {
+  font-size: 1.35rem;
+  margin-top: var(--spacing-md);
+  color: var(--text-secondary);
+}
+
+p {
+  margin-bottom: var(--spacing-sm);
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+/* ============================================
+   Layout Containers
+   ============================================ */
+
 .site-header,
 .site-footer,
 .content {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 1.5rem 1rem;
+  padding: var(--spacing-lg) var(--spacing-md);
+  animation: fadeInUp 0.6s ease-out;
 }
 
-/* Header */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================
+   Header
+   ============================================ */
+
 .site-header {
   text-align: center;
-  border-bottom: 1px solid var(--accent-soft);
-  margin-bottom: 0.5rem;
+  padding: var(--spacing-xl) var(--spacing-md) var(--spacing-lg);
+  background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.6) 100%);
+  border-radius: 12px;
+  margin-top: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+  box-shadow: 0 4px 20px var(--shadow-subtle);
+  border: 1px solid var(--border-soft);
+  position: relative;
+  overflow: hidden;
+}
+
+.site-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(to right, var(--accent-gold), var(--accent-deep), var(--accent-gold));
 }
 
 .site-header h1 {
-  margin: 0.2rem 0;
-  font-size: 1.8rem;
-  letter-spacing: 0.03em;
+  margin: 0 0 var(--spacing-sm) 0;
+  font-size: 2.75rem;
+  letter-spacing: 0.01em;
+  color: var(--accent-deep);
+  text-shadow: 1px 1px 2px var(--shadow-subtle);
+  font-weight: 700;
 }
 
 .site-header .subtitle {
-  margin: 0.2rem 0;
-  font-size: 1rem;
-  color: var(--accent);
+  margin: 0 0 var(--spacing-md) 0;
+  font-size: 1.15rem;
+  color: var(--text-secondary);
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0.02em;
 }
 
 .site-header .meta {
-  margin: 0.5rem 0 0;
-  font-size: 0.9rem;
-  color: #555555;
+  margin: var(--spacing-md) 0 0;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  opacity: 0.85;
 }
 
-/* Περιεχόμενο */
-.content h2 {
-  margin-top: 1.5rem;
-  margin-bottom: 0.5rem;
-  font-size: 1.2rem;
+/* ============================================
+   Content Area
+   ============================================ */
+
+.content {
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 10px;
+  box-shadow: 0 2px 15px var(--shadow-subtle);
+  padding: var(--spacing-xl) var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+  border: 1px solid var(--border-soft);
+  backdrop-filter: blur(10px);
 }
 
-.content p {
-  margin: 0.4rem 0;
-  text-align: justify;
+.content > *:first-child {
+  margin-top: 0;
 }
 
-/* Πίνακας περιεχομένων */
+.content > *:last-child {
+  margin-bottom: 0;
+}
+
+/* ============================================
+   Table of Contents
+   ============================================ */
+
 .toc {
-  padding-left: 1.2rem;
-  margin: 0.5rem 0 1.5rem;
+  list-style: none;
+  padding: 0;
+  margin: var(--spacing-md) 0 var(--spacing-lg);
+  counter-reset: toc-counter;
 }
 
 .toc li {
-  margin: 0.25rem 0;
+  counter-increment: toc-counter;
+  margin: 0.65rem 0;
+  padding-left: 2.5rem;
+  position: relative;
+  line-height: var(--line-height-normal);
+  transition: all var(--transition-smooth);
 }
 
-/* Γλωσσάρι */
-dl {
-  margin: 1rem 0 2rem;
+.toc li::before {
+  content: counter(toc-counter, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: 0.1rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--accent-gold);
+  width: 2rem;
+  text-align: right;
 }
 
-dt {
-  font-weight: bold;
-  margin-top: 0.5rem;
-  color: var(--accent);
+.toc li:hover {
+  transform: translateX(8px);
 }
 
-dd {
-  margin: 0 0 0.3rem 0.8rem;
-}
-
-/* Links */
-a {
-  color: var(--accent);
+.toc a {
+  color: var(--text-primary);
   text-decoration: none;
+  font-weight: 500;
+  transition: color var(--transition-fast);
+  display: inline-block;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 2px;
+}
+
+.toc a:hover {
+  color: var(--accent-deep);
+  border-bottom-color: var(--accent-gold);
+}
+
+/* ============================================
+   Links
+   ============================================ */
+
+a {
+  color: var(--accent-deep);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent-light);
+  transition: all var(--transition-fast);
+  padding-bottom: 1px;
 }
 
 a:hover,
 a:focus {
-  text-decoration: underline;
+  color: var(--accent-gold);
+  border-bottom-color: var(--accent-gold);
+  outline: none;
 }
 
-/* Footer */
-.site-footer {
-  border-top: 1px solid var(--accent-soft);
-  text-align: center;
-  font-size: 0.85rem;
-  color: #666666;
-  margin-top: 1rem;
+/* ============================================
+   Definition List (Glossary)
+   ============================================ */
+
+dl {
+  margin: var(--spacing-md) 0 var(--spacing-lg);
+  padding: var(--spacing-md);
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  border-left: 4px solid var(--accent-gold);
 }
 
-/* Navigation για σελίδες ιστοριών */
+dt {
+  font-weight: 700;
+  font-family: var(--font-display);
+  margin-top: var(--spacing-sm);
+  color: var(--accent-deep);
+  font-size: 1.05rem;
+}
+
+dt:first-child {
+  margin-top: 0;
+}
+
+dd {
+  margin: 0.3rem 0 var(--spacing-sm) var(--spacing-md);
+  color: var(--text-secondary);
+  line-height: var(--line-height-normal);
+}
+
+/* ============================================
+   Navigation Links (Story Pages)
+   ============================================ */
+
 .nav-links {
   display: flex;
   justify-content: space-between;
-  margin-top: 2rem;
-  font-size: 0.9rem;
+  align-items: center;
+  margin-top: var(--spacing-xl);
+  padding-top: var(--spacing-lg);
+  border-top: 2px solid var(--border-soft);
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
 }
 
 .nav-links a {
-  padding: 0.3rem 0;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, var(--accent-gold), var(--accent-deep));
+  color: white;
+  border-radius: 6px;
+  border: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 0 3px 12px var(--shadow-medium);
+  transition: all var(--transition-smooth);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-/* Responsive ρυθμίσεις */
-@media (min-width: 768px) {
+.nav-links a:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px var(--shadow-medium);
+}
+
+.nav-links a:active {
+  transform: translateY(-1px);
+}
+
+/* Βελάκια για navigation */
+.nav-links a[href*="index"]::before,
+.nav-links a:first-child::before {
+  content: '←';
+  font-size: 1.1rem;
+}
+
+.nav-links a:last-child:not([href*="index"])::after {
+  content: '→';
+  font-size: 1.1rem;
+}
+
+/* ============================================
+   Footer
+   ============================================ */
+
+.site-footer {
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  padding: var(--spacing-lg) var(--spacing-md);
+  margin-top: auto;
+  border-top: 1px solid var(--border-soft);
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(5px);
+}
+
+.site-footer p {
+  margin: 0;
+  opacity: 0.8;
+}
+
+/* ============================================
+   Ordered & Unordered Lists
+   ============================================ */
+
+ol:not(.toc), ul:not(.toc) {
+  margin: var(--spacing-sm) 0 var(--spacing-md);
+  padding-left: 2rem;
+}
+
+ol:not(.toc) li, ul:not(.toc) li {
+  margin: 0.4rem 0;
+  line-height: var(--line-height-normal);
+}
+
+/* ============================================
+   Blockquotes
+   ============================================ */
+
+blockquote {
+  margin: var(--spacing-md) 0;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-left: 4px solid var(--accent-gold);
+  background: rgba(212, 194, 163, 0.1);
+  border-radius: 0 8px 8px 0;
+  font-style: italic;
+  color: var(--text-secondary);
+}
+
+blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* ============================================
+   Emphasis & Strong
+   ============================================ */
+
+em, i {
+  font-style: italic;
+  color: var(--text-secondary);
+}
+
+strong, b {
+  font-weight: 700;
+  color: var(--accent-deep);
+}
+
+/* ============================================
+   Horizontal Rule
+   ============================================ */
+
+hr {
+  border: none;
+  height: 2px;
+  background: linear-gradient(to right, transparent, var(--accent-light), transparent);
+  margin: var(--spacing-lg) 0;
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+
+@media (max-width: 768px) {
+  :root {
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
+  }
+  
   body {
-    font-size: 1.05rem;
+    font-size: 1rem;
   }
-
+  
+  h1 {
+    font-size: 2rem;
+  }
+  
   .site-header h1 {
-    font-size: 2.1rem;
+    font-size: 2.2rem;
   }
-
+  
+  h2 {
+    font-size: 1.5rem;
+  }
+  
+  h3 {
+    font-size: 1.2rem;
+  }
+  
+  .site-header,
   .content {
-    padding: 2rem 1.5rem;
+    padding: var(--spacing-lg) var(--spacing-sm);
+  }
+  
+  .toc li {
+    padding-left: 2rem;
+  }
+  
+  .nav-links {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+  
+  .nav-links a {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 0.95rem;
+  }
+  
+  .site-header h1 {
+    font-size: 1.85rem;
+  }
+  
+  .site-header .subtitle {
+    font-size: 1rem;
+  }
+  
+  h2 {
+    font-size: 1.35rem;
+  }
+}
+
+/* ============================================
+   Print Styles
+   ============================================ */
+
+@media print {
+  body {
+    background: white;
+    font-size: 12pt;
+    line-height: 1.6;
+  }
+  
+  .site-header,
+  .content {
+    box-shadow: none;
+    border: none;
+    padding: 0;
+  }
+  
+  .nav-links,
+  .site-footer {
+    display: none;
+  }
+  
+  a {
+    color: black;
+    text-decoration: underline;
+  }
+  
+  h2::after {
+    display: none;
+  }
+}
+
+/* ============================================
+   Accessibility
+   ============================================ */
+
+/* Focus styles για πληκτρολόγιο */
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--accent-gold);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* Reduced motion για όσους το προτιμούν */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================
+   Dark Mode Support (Optional)
+   ============================================ */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primary-bg: #1a1612;
+    --secondary-bg: #221e18;
+    --text-primary: #e8dcc8;
+    --text-secondary: #c4b5a0;
+    --accent-gold: #d4a853;
+    --accent-deep: #b8935e;
+    --accent-light: #7b6346;
+    --border-soft: #3a342a;
+    --shadow-subtle: rgba(0, 0, 0, 0.3);
+    --shadow-medium: rgba(0, 0, 0, 0.5);
+  }
+  
+  .site-header {
+    background: linear-gradient(135deg, rgba(34,30,24,0.9) 0%, rgba(34,30,24,0.6) 100%);
+  }
+  
+  .content {
+    background: rgba(34, 30, 24, 0.85);
+  }
+  
+  dl {
+    background: rgba(0, 0, 0, 0.2);
+  }
+  
+  blockquote {
+    background: rgba(212, 168, 83, 0.1);
   }
 }
