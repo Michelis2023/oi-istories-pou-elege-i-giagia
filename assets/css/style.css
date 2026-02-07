@@ -7,9 +7,7 @@
   --line-height: 1.7;
 }
 
-*,
-*::before,
-*::after {
+*, *::before, *::after {
   box-sizing: border-box;
 }
 
@@ -26,6 +24,7 @@ body {
   line-height: var(--line-height);
 }
 
+/* Κεντρικό δοχείο */
 .site-header,
 .site-footer,
 .content {
@@ -34,6 +33,7 @@ body {
   padding: 1.5rem 1rem;
 }
 
+/* Header */
 .site-header {
   text-align: center;
   border-bottom: 1px solid var(--accent-soft);
@@ -58,6 +58,7 @@ body {
   color: #555555;
 }
 
+/* Περιεχόμενο */
 .content h2 {
   margin-top: 1.5rem;
   margin-bottom: 0.5rem;
@@ -69,14 +70,32 @@ body {
   text-align: justify;
 }
 
-.toc ol {
+/* Πίνακας περιεχομένων */
+.toc {
   padding-left: 1.2rem;
+  margin: 0.5rem 0 1.5rem;
 }
 
 .toc li {
   margin: 0.25rem 0;
 }
 
+/* Γλωσσάρι */
+dl {
+  margin: 1rem 0 2rem;
+}
+
+dt {
+  font-weight: bold;
+  margin-top: 0.5rem;
+  color: var(--accent);
+}
+
+dd {
+  margin: 0 0 0.3rem 0.8rem;
+}
+
+/* Links */
 a {
   color: var(--accent);
   text-decoration: none;
@@ -87,6 +106,7 @@ a:focus {
   text-decoration: underline;
 }
 
+/* Footer */
 .site-footer {
   border-top: 1px solid var(--accent-soft);
   text-align: center;
