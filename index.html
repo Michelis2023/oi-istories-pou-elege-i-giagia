@@ -73,10 +73,44 @@
       letter-spacing: 1px;
     }
 
-    .newsletter-form button:hover {
+    .newsletter-form button:hover:not(:disabled) {
       background: linear-gradient(135deg, #654321 0%, #8b4513 100%);
       transform: translateY(-2px);
       box-shadow: 0 6px 20px rgba(139, 69, 19, 0.4);
+    }
+
+    .newsletter-form button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .success-message {
+      color: #4caf50;
+      margin-top: 15px;
+      font-weight: bold;
+      display: none;
+      background: rgba(76, 175, 80, 0.1);
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid #4caf50;
+    }
+
+    .error-message {
+      color: #f44336;
+      margin-top: 15px;
+      font-weight: bold;
+      display: none;
+      background: rgba(244, 67, 54, 0.1);
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid #f44336;
+    }
+
+    .privacy-note {
+      font-size: 0.85rem;
+      color: #999;
+      margin-top: 15px;
+      font-style: italic;
     }
 
     @media (max-width: 768px) {
@@ -160,21 +194,75 @@
 
     <!-- Newsletter Section -->
     <section class="newsletter-section">
-      <h2>📖 Μείνετε Συντονισμένοι</h2>
+      <h2>📬 Ενημερωθείτε για Νέα Διηγήματα</h2>
       <p>
-        Εγγραφείτε στο newsletter μου για να λαμβάνετε πρώτοι νέα διηγήματα, 
+        Εγγραφείτε για να μαθαίνετε πρώτοι για νέες δημοσιεύσεις, 
         αποκλειστικό περιεχόμενο και ενημερώσεις από τον κόσμο της ελληνικής λογοτεχνίας.
       </p>
-      <form class="newsletter-form" action="https://gmail.us11.list-manage.com/subscribe/post?u=YOUR_USER_ID&id=YOUR_LIST_ID" method="post" target="_blank">
-        <input type="email" name="EMAIL" placeholder="Το email σας" required>
-        <input type="text" name="FNAME" placeholder="Το όνομά σας (προαιρετικό)">
-        <button type="submit">Εγγραφή</button>
+      <form id="newsletter-form" class="newsletter-form" onsubmit="return subscribeNewsletter(event)">
+        <input type="email" placeholder="Το email σας" id="newsletter-email" name="email" required>
+        <input type="text" placeholder="Το όνομά σας (προαιρετικό)" id="newsletter-name" name="name">
+        <button type="submit" id="submit-btn">Εγγραφή</button>
       </form>
+      <div class="success-message" id="success-message">✓ Ευχαριστούμε! Θα λαμβάνετε ενημερώσεις για νέα διηγήματα.</div>
+      <div class="error-message" id="error-message">✗ Κάτι πήγε στραβά. Παρακαλώ δοκιμάστε ξανά.</div>
+      <p class="privacy-note">* Δεν θα μοιραστούμε το email σας με τρίτους</p>
     </section>
   </main>
 
   <footer class="site-footer">
     <p>© 2025 Μιχαήλ Σωτηρίου Μιχαλακόπουλος. Όλα τα δικαιώματα διατηρούνται.</p>
   </footer>
+
+  <script>
+    // Formspree Newsletter Integration
+    async function subscribeNewsletter(event) {
+      event.preventDefault();
+      
+      const email = document.getElementById('newsletter-email').value;
+      const name = document.getElementById('newsletter-name').value;
+      const submitBtn = document.getElementById('submit-btn');
+      const successMsg = document.getElementById('success-message');
+      const errorMsg = document.getElementById('error-message');
+      
+      // Hide previous messages
+      successMsg.style.display = 'none';
+      errorMsg.style.display = 'none';
+      
+      // Disable button during submission
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Γίνεται εγγραφή...';
+      
+      try {
+        const response = await fetch('https://formspree.io/f/xkovnegz', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            email: email,
+            name: name,
+            _subject: 'Νέα Εγγραφή Newsletter - Οι Ιστορίες που Έλεγε η Γιαγιά',
+            message: `Νέα εγγραφή στο newsletter από: ${name || 'Ανώνυμος'} (${email})`
+          })
+        });
+        
+        if (response.ok) {
+          successMsg.style.display = 'block';
+          document.getElementById('newsletter-email').value = '';
+          document.getElementById('newsletter-name').value = '';
+        } else {
+          errorMsg.style.display = 'block';
+        }
+      } catch (error) {
+        errorMsg.style.display = 'block';
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Εγγραφή';
+      }
+      
+      return false;
+    }
+  </script>
 </body>
 </html>
