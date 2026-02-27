@@ -621,6 +621,105 @@ hr {
 }
 
 /* ============================================
+   Social Proof Section
+   ============================================ */
+
+.stats-section {
+  margin: 60px 0;
+  padding: 40px 0;
+  border-top: 2px solid #8b4513;
+  border-bottom: 2px solid #8b4513;
+  text-align: center;
+}
+
+.stats-section h2 {
+  color: #2c1810;
+  font-size: 2rem;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 30px;
+  margin-bottom: 40px;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.stat-card {
+  background: linear-gradient(135deg, #f4e4c1 0%, #e8d4b1 100%);
+  border: 2px solid #8b4513;
+  border-radius: 12px;
+  padding: 30px 20px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(139, 69, 19, 0.3);
+}
+
+.stat-icon {
+  font-size: 3rem;
+  margin-bottom: 15px;
+}
+
+.stat-number {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #2c1810;
+  margin-bottom: 10px;
+  font-family: Georgia, serif;
+}
+
+.stat-label {
+  font-size: 1rem;
+  color: #654321;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.github-badge {
+  margin: 40px 0;
+  text-align: center;
+}
+
+.github-badge img {
+  transition: transform 0.3s ease;
+}
+
+.github-badge a:hover img {
+  transform: scale(1.1);
+}
+
+.github-note {
+  margin-top: 15px;
+  color: #8b4513;
+  font-style: italic;
+  font-size: 0.95rem;
+}
+
+.testimonials-preview {
+  margin-top: 50px;
+  padding: 30px;
+  background: rgba(139, 69, 19, 0.05);
+  border-radius: 8px;
+  border: 1px dashed #8b4513;
+}
+
+.coming-soon {
+  color: #8b4513;
+  font-style: italic;
+  font-size: 1rem;
+  margin: 0;
+}
+
+/* ============================================
    Responsive Design
    ============================================ */
 
@@ -692,6 +791,32 @@ hr {
     width: 100%;
     justify-content: center;
   }
+  
+  /* Stats Section Responsive */
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .stat-card {
+    padding: 20px 15px;
+  }
+
+  .stat-icon {
+    font-size: 2.5rem;
+  }
+
+  .stat-number {
+    font-size: 2rem;
+  }
+
+  .stat-label {
+    font-size: 0.9rem;
+  }
+
+  .stats-section h2 {
+    font-size: 1.6rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -726,6 +851,11 @@ hr {
     font-size: 0.8rem;
     padding: 0.6rem 0.8rem;
   }
+  
+  /* Stats για mobile */
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ============================================
@@ -753,7 +883,8 @@ hr {
   .sticky-nav,
   .nav-links,
   .breadcrumbs,
-  .newsletter-section {
+  .newsletter-section,
+  .stats-section {
     display: none !important;
   }
   
@@ -937,5 +1068,13 @@ input:focus-visible {
   
   blockquote {
     background: rgba(212, 168, 83, 0.1);
+  }
+  
+  .stat-card {
+    background: linear-gradient(135deg, #3a342a 0%, #2a261e 100%);
+  }
+  
+  .testimonials-preview {
+    background: rgba(212, 168, 83, 0.08);
   }
 }
