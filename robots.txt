@@ -1,0 +1,9 @@
+# robots.txt για τη συλλογή "Οι ιστορίες που έλεγε η γιαγιά"
+# Μιχαήλ Σωτηρίου Μιχαλακόπουλος
+
+# Επιτρέπει σε όλους τους crawlers να ανακαλύψουν όλο το site
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://michelis2023.github.io/oi-istories-pou-elege-i-giagia/sitemap.xml
