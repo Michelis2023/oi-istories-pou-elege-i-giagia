@@ -1,32 +1,15 @@
-# robots.txt για τη συλλογή "Οι ιστορίες που έλεγε η γιαγιά"
-# Μιχαήλ Σωτηρίου Μιχαλακόπουλος
+# robots.txt για «Οι ιστορίες που έλεγε η γιαγιά»
 # https://michelis2023.github.io/oi-istories-pou-elege-i-giagia/
 
 User-agent: *
 Allow: /
 
-# Sitemap location
+# Sitemap
 Sitemap: https://michelis2023.github.io/oi-istories-pou-elege-i-giagia/sitemap.xml
 
-# Crawl-delay για να μην επιβαρύνουμε το GitHub Pages
-Crawl-delay: 10
+# Αποφυγή crawling σε assets
+Disallow: /assets/css/
+Disallow: /assets/js/
 
-# Ειδικές οδηγίες για Google
-User-agent: Googlebot
-Allow: /
-Crawl-delay: 5
-
-# Ειδικές οδηγίες για Bing
-User-agent: Bingbot
-Allow: /
-Crawl-delay: 5
-
-# Αποκλεισμός spam bots
-User-agent: AhrefsBot
-Disallow: /
-
-User-agent: SemrushBot
-Disallow: /
-
-User-agent: DotBot
-Disallow: /
+# Επιτρέπουμε όλα τα HTML
+Allow: /*.html$
