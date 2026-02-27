@@ -1,0 +1,187 @@
+/* Print Stylesheet για «Οι ιστορίες που έλεγε η γιαγιά» */
+
+@media print {
+    /* Απόκρυψη στοιχείων που δεν χρειάζονται στην εκτύπωση */
+    nav.sticky-nav,
+    .skip-to-content,
+    .newsletter-section,
+    .stats-section,
+    .github-badge,
+    footer,
+    .no-print,
+    button,
+    input,
+    form {
+        display: none !important;
+    }
+
+    /* Βασικές ρυθμίσεις σελίδας */
+    * {
+        background: white !important;
+        color: black !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    body {
+        font-family: 'Garamond', 'Georgia', serif;
+        font-size: 12pt;
+        line-height: 1.6;
+        margin: 2cm;
+        background: white !important;
+        color: black !important;
+    }
+
+    /* Τίτλοι */
+    h1, h2, h3, h4, h5, h6 {
+        page-break-after: avoid;
+        color: #000 !important;
+        font-family: 'Georgia', serif;
+    }
+
+    h1 {
+        font-size: 24pt;
+        margin-bottom: 0.5cm;
+        border-bottom: 2pt solid #000;
+        padding-bottom: 0.3cm;
+        text-align: center;
+    }
+
+    h2 {
+        font-size: 18pt;
+        margin-top: 1cm;
+        margin-bottom: 0.5cm;
+    }
+
+    h3 {
+        font-size: 14pt;
+        margin-top: 0.8cm;
+        margin-bottom: 0.4cm;
+    }
+
+    /* Subtitle */
+    .subtitle {
+        font-size: 14pt;
+        font-style: italic;
+        color: #333 !important;
+        text-align: center;
+        margin-bottom: 0.3cm;
+    }
+
+    /* Meta info */
+    .meta {
+        font-size: 10pt;
+        color: #666 !important;
+        text-align: center;
+        margin-bottom: 1cm;
+    }
+
+    /* Παράγραφοι */
+    p {
+        orphans: 3;
+        widows: 3;
+        text-align: justify;
+        margin-bottom: 0.5cm;
+        color: #000 !important;
+    }
+
+    /* Λίστες - Πίνακας Περιεχομένων */
+    ol.toc,
+    ul {
+        margin-left: 1cm;
+        page-break-inside: avoid;
+    }
+
+    ol.toc li {
+        margin-bottom: 0.3cm;
+        line-height: 1.8;
+    }
+
+    /* Links */
+    a {
+        color: #000 !important;
+        text-decoration: none;
+    }
+
+    a[href]:after {
+        content: "";
+    }
+
+    /* Header */
+    .site-header {
+        border-bottom: 2pt solid #000;
+        padding-bottom: 0.5cm;
+        margin-bottom: 1cm;
+        page-break-after: avoid;
+    }
+
+    /* Content sections */
+    section,
+    article {
+        page-break-inside: avoid;
+    }
+
+    /* Blockquotes */
+    blockquote {
+        border-left: 3pt solid #000;
+        padding-left: 0.5cm;
+        margin: 1cm 0;
+        font-style: italic;
+        color: #333 !important;
+    }
+
+    /* Αρίθμηση σελίδων */
+    @page {
+        margin: 2cm;
+        size: A4;
+        
+        @bottom-center {
+            content: "Σελίδα " counter(page) " από " counter(pages);
+            font-size: 10pt;
+            color: #666;
+        }
+
+        @top-center {
+            content: "Οι ιστορίες που έλεγε η γιαγιά";
+            font-size: 10pt;
+            color: #666;
+            font-style: italic;
+        }
+    }
+
+    /* Πρώτη σελίδα χωρίς header και αρίθμηση */
+    @page :first {
+        @top-center {
+            content: "";
+        }
+        @bottom-center {
+            content: "";
+        }
+    }
+
+    /* Αποφυγή page breaks */
+    h1, h2, h3, h4, h5, h6 {
+        page-break-after: avoid;
+    }
+
+    p, blockquote {
+        page-break-inside: avoid;
+    }
+
+    /* Εικόνες */
+    img {
+        max-width: 100% !important;
+        page-break-inside: avoid;
+        page-break-after: avoid;
+    }
+
+    /* Table of Contents */
+    nav[aria-label="Πίνακας περιεχομένων"] {
+        page-break-after: always;
+    }
+
+    /* Επικοινωνία section */
+    main > h2:nth-of-type(2) {
+        page-break-before: always;
+    }
+}
