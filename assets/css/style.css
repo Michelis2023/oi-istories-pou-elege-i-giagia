@@ -76,6 +76,24 @@ body {
   flex-direction: column;
 }
 
+/* Skip to content link for accessibility */
+.skip-to-content {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--accent-deep);
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  font-weight: bold;
+  z-index: 10000;
+  border-radius: 0 0 4px 0;
+}
+
+.skip-to-content:focus {
+  top: 0;
+}
+
 /* Επιλογή κειμένου */
 ::selection {
   background: var(--accent-light);
@@ -266,6 +284,33 @@ p:last-child {
 .sticky-nav-buttons a.nav-next::after {
   content: '→';
   font-size: 1rem;
+}
+
+/* ============================================
+   Breadcrumbs
+   ============================================ */
+
+.breadcrumbs {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-md);
+  padding: var(--spacing-sm) 0;
+}
+
+.breadcrumbs a {
+  color: var(--accent-deep);
+  text-decoration: none;
+  border-bottom: none;
+  transition: color var(--transition-fast);
+}
+
+.breadcrumbs a:hover {
+  color: var(--accent-gold);
+}
+
+.breadcrumbs span {
+  margin: 0 0.5rem;
+  opacity: 0.5;
 }
 
 /* ============================================
@@ -684,49 +729,150 @@ hr {
 }
 
 /* ============================================
-   Print Styles
+   Print Styles - Enhanced
    ============================================ */
 
 @media print {
+  *,
+  *::before,
+  *::after {
+    background: transparent !important;
+    color: #000 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+  
   body {
-    background: white;
+    background: white !important;
     font-size: 12pt;
     line-height: 1.6;
+    color: #000;
   }
   
-  .site-header,
-  .content {
-    box-shadow: none;
-    border: none;
-    padding: 0;
-  }
-  
+  /* Hide navigation elements */
   .sticky-nav,
   .nav-links,
-  .site-footer {
+  .breadcrumbs,
+  .newsletter-section {
+    display: none !important;
+  }
+  
+  /* Show URLs after links */
+  a[href]:after {
+    content: " (" attr(href) ")";
+    font-size: 90%;
+    color: #555;
+  }
+  
+  a[href^="#"]:after,
+  a[href^="javascript:"]:after {
+    content: "";
+  }
+  
+  /* Headers */
+  .site-header,
+  .content {
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    page-break-inside: avoid;
+  }
+  
+  .site-header::before {
     display: none;
   }
   
-  a {
-    color: black;
-    text-decoration: underline;
+  h1 {
+    font-size: 24pt;
+    margin-bottom: 12pt;
+  }
+  
+  h2 {
+    font-size: 18pt;
+    margin-top: 18pt;
+    margin-bottom: 12pt;
+    page-break-after: avoid;
   }
   
   h2::after {
     display: none;
   }
+  
+  h3 {
+    font-size: 14pt;
+    margin-top: 14pt;
+    margin-bottom: 8pt;
+    page-break-after: avoid;
+  }
+  
+  /* Paragraphs */
+  p {
+    orphans: 3;
+    widows: 3;
+    text-align: justify;
+  }
+  
+  /* Footer */
+  .site-footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    border-top: 1px solid #000;
+    padding: 6pt 0;
+    font-size: 9pt;
+  }
+  
+  /* Table of contents */
+  .toc {
+    page-break-inside: avoid;
+  }
+  
+  .toc li {
+    page-break-inside: avoid;
+  }
+  
+  /* Page breaks */
+  blockquote,
+  dl {
+    page-break-inside: avoid;
+  }
+  
+  /* Add page numbers */
+  @page {
+    margin: 2cm;
+  }
+  
+  @page :first {
+    margin-top: 3cm;
+  }
 }
 
 /* ============================================
-   Accessibility
+   Accessibility - Enhanced
    ============================================ */
 
 /* Focus styles για πληκτρολόγιο */
 a:focus-visible,
-button:focus-visible {
+button:focus-visible,
+input:focus-visible {
   outline: 3px solid var(--accent-gold);
   outline-offset: 3px;
   border-radius: 3px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --text-primary: #000;
+    --text-secondary: #222;
+    --accent-deep: #654321;
+    --border-soft: #999;
+  }
+  
+  a {
+    text-decoration: underline;
+  }
 }
 
 /* Reduced motion για όσους το προτιμούν */
@@ -739,6 +885,19 @@ button:focus-visible {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* Screen reader only class */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
 
 /* ============================================
