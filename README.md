@@ -130,10 +130,10 @@ oi-istories-pou-elege-i-giagia/
 ├── 01.html                 # Διήγημα 1
 ├── 02.html                 # Διήγημα 2
 ├── ...                     # Διηγήματα 3-15
-├── 17.html                 # Επίλογος
-├── 18.html                 # Σχετικά με τον Συγγραφέα
-├── 19.html                 # Γλωσσάρι
-├── 20.html                 # Ευχαριστίες
+├── 16.html                 # Επίλογος
+├── 17.html                 # Σχετικά με τον Συγγραφέα
+├── 18.html                 # Γλωσσάρι
+├── 19.html                 # Ευχαριστίες
 └── assets/
     └── css/
         └── style.css       # Κεντρικό stylesheet
@@ -171,6 +171,10 @@ oi-istories-pou-elege-i-giagia/
 ### 🕯️ [Γοτθικά Διηγήματα](https://michelis2023.github.io/short-stories/)
 
 Συλλογή γοτθικών διηγημάτων τρόμου με επιρροές από τον Edgar Allan Poe και την ελληνική λαογραφία.
+
+### 🏛️ [Μελετήματα: Ιστορία & Πολιτισμός](https://michelis2023.github.io/meletemata-istoria-politismos/)
+
+Δοκίμια και άρθρα για την ελληνική ιστορία και πολιτιστική κληρονομιά.
 
 ### 👤 [Προφίλ Συγγραφέα](https://github.com/Michelis2023)
 
