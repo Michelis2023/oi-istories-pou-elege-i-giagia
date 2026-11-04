@@ -11,7 +11,7 @@
 <div class="notice"><strong>Μέτρηση από γεμάτο σε γεμάτο</strong>
 <ol><li>Σημείωσε την ώρα και τις ενδείξεις και των δύο ωρομετρητών τη στιγμή της συμπλήρωσης.</li>
 <li>Συμπλήρωσε μέχρι το ίδιο σημάδι στο σιλό. Πρόσθεσε στο άθροισμα όσα κιλά έριξες ενδιάμεσα, μαζί με την τελευταία συμπλήρωση.</li>
-<li>Γράψε μόνο αυτό το άθροισμα. Τα περίπου 180 kg που μένουν στο γεμάτο σιλό είναι απόθεμα. Δεν τα προσθέτεις ούτε τα αφαιρείς ξανά.</li></ol>
+<li>Γράψε μόνο αυτό το άθροισμα. Το καύσιμο που μένει μέσα στο σιλό είναι απόθεμα. Δεν τα προσθέτεις ούτε τα αφαιρείς ξανά.</li></ol>
 <p>Παράδειγμα: γεμάτο στις 20:02 χθες και ξανά γεμάτο σήμερα, με 40 kg συνολική συμπλήρωση. Κατανάλωση περιόδου 40 kg. Οι ώρες κάθε σπιτιού προκύπτουν από τη διαφορά των δικών του ενδείξεων.</p></div>
 <div class="grid"><label class="field">Καθαρά κιλά συμπλήρωσης της περιόδου<input id="usedKg" type="number" min="0" step="any" placeholder="π.χ. 40"><small>Γράψε τα κιλά που μπήκαν στο σιλό. Τυχόν περίσσευμα έξω από το σιλό δεν μετρά.</small></label>
 <label class="field">Ισοδύναμα τσουβάλια των 30 kg (εκτίμηση)<input id="usedBags" type="number" min="0" step="any" placeholder="π.χ. 1,33"><small>Αν τα τσουβάλια έχουν διαφορετικό βάρος, χρησιμοποίησε τα ζυγισμένα κιλά.</small></label>
@@ -88,7 +88,7 @@ $('seasonTotals').innerHTML='<div class="stat">Καύσιμο που κάηκε 
   +'<p class="muted">Περιλαμβάνει '+fmt(state.seasonBaseline.kg)+' kg έως '+timeLabel(state.seasonBaseline.stamp)+', χωρίς κατανομή ανά σπίτι για εκείνο το διάστημα. Προστίθενται μόνο περίοδοι με έναρξη από την ημερομηνία αυτή, ώστε να αποφεύγεται η διπλή μέτρηση.</p>';
 const baseline=state.seasonBaseline;
 if(Number.isFinite(baseline.addedKg)){
-  $('seasonTotals').innerHTML+='<p class="muted">Στις '+timeLabel(baseline.stamp)+' τα 17 τσουβάλια αντιστοιχούσαν σε περίπου '+fmt(baseline.addedKg)+' kg. Με '+fmt(baseline.siloKg)+' kg στο γεμάτο σιλό και '+fmt(baseline.extraKg)+' kg επιπλέον, η εκτιμώμενη κατανάλωση ήταν '+fmt(baseline.kg)+' kg. Το υπόλοιπο είναι απόθεμα.</p>';
+  $('seasonTotals').innerHTML+='<p class="muted">Στις '+timeLabel(baseline.stamp)+' τα 17 τσουβάλια αντιστοιχούσαν σε περίπου '+fmt(baseline.addedKg)+' kg. Απόθεμα μέσα στο σιλό: περίπου '+fmt(baseline.siloKg+baseline.extraKg)+' kg, δηλαδή '+fmt(baseline.siloKg)+' kg μέχρι τη στάθμη γεμίσματος και '+fmt(baseline.extraKg)+' kg στο μικρό ύψωμα (περίπου ⅓ τσουβαλιού). Εκτιμώμενη κατανάλωση: '+fmt(baseline.kg)+' kg.</p>';
 }
 $('historicalReadings').innerHTML=heatingHoursInfo;
 $('history').innerHTML=state.entries.map((e,i)=>!range.includes(e)?'':'<tr><td>'+(e.initial?'Αρχική ένδειξη '+timeLabel(e.stamp):timeLabel(e.from)+' έως '+timeLabel(e.stamp))+'</td><td>'+(e.initial?'Αφετηρία':fmt(e.bags)+' / '+fmt(e.kg))+'</td><td>'+(e.initial?fmt(e.upper)+' (ένδειξη)':fmt(e.upHours))+'</td><td>'+(e.initial?fmt(e.lower)+' (ένδειξη)':fmt(e.downHours))+'</td><td>'+(e.initial?'':fmt(e.upCost))+'</td><td>'+(e.initial?'':fmt(e.downCost))+'</td><td><button class="secondary" data-remove="'+i+'">Διαγραφή</button></td></tr>').join('')||'<tr><td colspan="7">Δεν υπάρχουν μετρήσεις για αυτή την επιλογή.</td></tr>';$('history').querySelectorAll('[data-remove]').forEach(b=>b.addEventListener('click',()=>{const i=Number(b.dataset.remove);if(i!==state.entries.length-1){alert('Για συνέπεια των μετρήσεων διαγράφεται μόνο η τελευταία καταχώριση.');return}if(confirm('Να διαγραφεί η τελευταία καταχώριση;')){state.entries.pop();persist();renderAll();renderPurchases()}}))}function download(name,body,type){const a=document.createElement('a'),u=URL.createObjectURL(new Blob([body],{type}));a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1000)}const EKEY='pyrina_electric_v11';const eIds=['burnHoursDay','burnDays','screwWatts','fanWatts','panelWatts','feedSeconds','pauseSeconds','startsDay','maintEvery','maintScrew','maintFan','postPurge'];try{const saved=JSON.parse(localStorage.getItem(EKEY));if(saved)eIds.forEach(k=>{if(Number.isFinite(saved[k]))$(k).value=saved[k]})}catch(e){}
@@ -174,8 +174,10 @@ if(needsPurchaseSetup){state.purchases=initialPurchases;syncPurchases()}
 const oct=state.purchases.find(x=>x.id==='initial-oct');if(!state.seasonBaseline&&oct&&oct.transport===0&&oct.labor===0){oct.transport=40;oct.notes='40 ευρώ βενζίνη προσωπικού αγροτικού, χωρίς εργατικά';persist()}
 function correctSeasonBaseline(target){
   const previous=target.seasonBaseline;
-  if(previous&&(previous.kg!==510||previous.upper!==4414.04||previous.lower!==2273.19))return false;
-  const addedKg=17*30,siloKg=180,extraKg=30/4;
+  const legacy=previous?.kg===510;
+  const quarterBag=previous?.addedKg===510&&previous.siloKg===180&&previous.extraKg===7.5&&previous.kg===322.5;
+  if(previous&&(!(legacy||quarterBag)||previous.upper!==4414.04||previous.lower!==2273.19))return false;
+  const addedKg=17*30,siloKg=180,extraKg=30/3;
   target.seasonBaseline={
     stamp:new Date('2026-11-03T20:02:00+02:00').getTime(),
     upper:4414.04,lower:2273.19,
