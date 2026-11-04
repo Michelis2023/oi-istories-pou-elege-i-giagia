@@ -24,11 +24,12 @@ const buyFields=['buyDate','buyInvoice','buySupplier','buyType','buyKg','buyCost
 const parseBuy=v=>Number(String(v).trim().replace(/\s/g,'').replace(/\.(?=\d{3}(?:\D|$))/g,'').replace(',','.'));
 const initialPurchases=[
 {id:'gift-oct',date:'2026-10-27',invoice:'ΔΩΡΟ',supplier:'Δωρεάν παραλαβή',type:'Πυρήνα ελιάς',kg:60,cost:0,transport:0,labor:0,notes:'2 δωρεάν τσουβάλια × 30 kg. Δεν περιλαμβάνονται στα αγορασμένα κιλά',gift:true},
-{id:'initial-oct',date:'2026-10-27',invoice:'008413',supplier:'Ελαιουργική Ηλείας Α.Ε.',type:'Κουκούτσι πυρηνόξυλο συσκευασμένο',kg:1420,cost:184.60,transport:0,labor:0,notes:'Πρόσθετα έξοδα προς επιβεβαίωση'},
+{id:'initial-oct',date:'2026-10-27',invoice:'008413',supplier:'Ελαιουργική Ηλείας Α.Ε.',type:'Κουκούτσι πυρηνόξυλο συσκευασμένο',kg:1420,cost:184.60,transport:40,labor:0,notes:'40 ευρώ βενζίνη προσωπικού αγροτικού, χωρίς εργατικά'},
 {id:'initial-nov-1',date:'2026-11-02',invoice:'',supplier:'',type:'Πυρήνα ελιάς',kg:2200,cost:286,transport:0,labor:0,notes:'Αρχική αγορά, παραστατικό 1'},
 {id:'initial-nov-2',date:'2026-11-02',invoice:'',supplier:'',type:'Πυρήνα ελιάς',kg:2980,cost:387.40,transport:150,labor:70,notes:'Αρχική αγορά, παραστατικό 2. Κοινά μεταφορικά και εργατικά'}
 ];
 if(!Array.isArray(state.purchases)){state.purchases=initialPurchases;persist()}else if(!state.purchases.some(x=>x.id==='gift-oct')){state.purchases.push(initialPurchases[0]);persist()}
+const oct=state.purchases.find(x=>x.id==='initial-oct');if(oct&&oct.transport===0&&oct.labor===0){oct.transport=40;oct.notes='40 ευρώ βενζίνη προσωπικού αγροτικού, χωρίς εργατικά';persist()}
 if(!state.seasonBaseline){state.seasonBaseline={stamp:new Date('2026-11-03T20:02:00').getTime(),kg:510,paidKg:450,giftKg:60,upper:4414.04,lower:2273.19,notes:'Συνολική κατανάλωση από αρχή θέρμανσης έως 03/11/2026 20:00. 17 τσουβάλια, εκ των οποίων 2 δωρεάν.'};persist()}
 const heatingHoursInfo='<div class="stat"><strong>Ώρες λειτουργίας από 27/10/2026 18:00 έως 03/11/2026 20:02</strong><p>Πάνω: 16,50 ώρες (10,89 εκτίμηση + 5,61 μετρημένες). Κάτω: 17,59 ώρες (11,61 εκτίμηση + 5,98 μετρημένες).</p><p class="muted">Η εκτίμηση αφορά το διάστημα έως 01/11 10:14 και βασίζεται στον μέσο ρυθμό των μεταγενέστερων μετρήσεων. Δεν είναι πραγματική ένδειξη. Κατανάλωση περιόδου: 510 kg, χωρίς διπλή προσμέτρηση.</p><p>01/11 10:14: 4408,43 / 2267,21 ώρες<br>03/11 11:11: 4413,04 / 2272,27 ώρες<br>03/11 20:02: 4414,04 / 2273,19 ώρες</p></div>';
 const seasonUsed=()=>state.seasonBaseline.kg+state.entries.filter(e=>!e.initial&&e.stamp>state.seasonBaseline.stamp).reduce((a,e)=>a+(e.kg||0),0);
