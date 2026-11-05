@@ -101,8 +101,25 @@ const selectedRows=rows.filter(range.includes);
 $('monthlyTotals').innerHTML=periodCards(selectedRows);
 $('totals').innerHTML=periodCards(rows);
 $('seasonTotals').innerHTML='<div class="stat">Καύσιμο που κάηκε στη σεζόν<strong>'+fmt(seasonUsed())+' kg</strong>'+fmt(seasonUsed()/30)+' ισοδύναμα τσουβάλια</div>'
-  +'<p class="muted">Περιλαμβάνει '+fmt(state.seasonBaseline.kg)+' kg έως '+timeLabel(state.seasonBaseline.stamp)+', χωρίς κατανομή ανά σπίτι για εκείνο το διάστημα. Προστίθενται μόνο περίοδοι με έναρξη από την ημερομηνία αυτή, ώστε να αποφεύγεται η διπλή μέτρηση.</p>';
+  +'<p class="muted">Περιλαμβάνει '+fmt(state.seasonBaseline.kg)+' kg έως '+timeLabel(state.seasonBaseline.stamp)+', με εκτιμώμενη κατανομή ανά σπίτι για εκείνο το διάστημα. Προστίθενται μόνο περίοδοι με έναρξη από την ημερομηνία αυτή, ώστε να αποφεύγεται η διπλή μέτρηση.</p>';
 const baseline=state.seasonBaseline;
+if(baseline&&Number.isFinite(baseline.kg)){
+  // Οι ώρες πριν από την πρώτη πλήρη μέτρηση είναι εκτιμήσεις και εμφανίζονται ως τέτοιες.
+  const estimatedUpHours=16.50,estimatedDownHours=17.59;
+  const fixedUp=fixed.upVolume/(fixed.upVolume+fixed.downVolume);
+  const variableUp=fixed.upPower*estimatedUpHours/(fixed.upPower*estimatedUpHours+fixed.downPower*estimatedDownHours);
+  const shareUp=.2*fixedUp+.8*variableUp;
+  const baselineUp=baseline.kg*shareUp,baselineDown=baseline.kg-baselineUp;
+  const purchases=Array.isArray(state.purchases)?state.purchases:[];
+  const purchasedKg=purchases.reduce((n,p)=>n+(Number(p.kg)||0),0);
+  const purchasedCost=purchases.reduce((n,p)=>n+(Number(p.cost)||0)+(Number(p.transport)||0)+(Number(p.labor)||0),0);
+  const baselineCost=purchasedKg>0?baseline.kg*purchasedCost/purchasedKg:null;
+  const details=baselineCost===null?'':' · εκτιμώμενο κόστος '+fmt(baselineCost)+' €';
+  $('seasonTotals').innerHTML+='<h3 style="grid-column:1/-1;margin:12px 0 0">Κατανομή αρχικής κατανάλωσης έως 3/11/2026</h3>'
+    +'<div class="stat">Πάνω κατοικία<strong>'+fmt(baselineUp)+' kg</strong>'+fmt(shareUp*100)+'%'+(baselineCost===null?'':' · '+fmt(baselineCost*shareUp)+' €')+'</div>'
+    +'<div class="stat">Κάτω κατοικία<strong>'+fmt(baselineDown)+' kg</strong>'+fmt((1-shareUp)*100)+'%'+(baselineCost===null?'':' · '+fmt(baselineCost*(1-shareUp))+' €')+'</div>'
+    +'<p class="muted" style="grid-column:1/-1">Εκτιμώμενη αρχική κατανομή με 16,50 ώρες πάνω και 17,59 ώρες κάτω. Πάγιο 20% βάσει κυβικών και 80% βάσει ισχύος σωμάτων επί ώρες'+details+'. Οι ώρες της αρχικής περιόδου δεν προέρχονται όλες από καταγεγραμμένες αρχικές ενδείξεις. Τα '+fmt(baseline.kg)+' kg έχουν ήδη υπολογιστεί στη σεζόν και δεν προστίθενται δεύτερη φορά.</p>';
+}
 if(Number.isFinite(baseline.addedKg)){
   $('seasonTotals').innerHTML+='<p class="muted">Στις '+timeLabel(baseline.stamp)+' τα 17 τσουβάλια αντιστοιχούσαν σε περίπου '+fmt(baseline.addedKg)+' kg. Απόθεμα μέσα στο σιλό: περίπου '+fmt(baseline.siloKg+baseline.extraKg)+' kg, δηλαδή '+fmt(baseline.siloKg)+' kg μέχρι τη στάθμη γεμίσματος και '+fmt(baseline.extraKg)+' kg στο μικρό ύψωμα (περίπου ⅓ τσουβαλιού). Εκτιμώμενη κατανάλωση: '+fmt(baseline.kg)+' kg.</p>';
 }
