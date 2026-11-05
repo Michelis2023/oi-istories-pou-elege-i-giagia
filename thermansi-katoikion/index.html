@@ -34,7 +34,7 @@
   return previous.stockKg??180;
 }
 function defaultEndStock(previous){
-  return previous===state.seasonBaseline?previous.siloKg:previousStock(previous);
+  return previousStock(previous);
 }
 function renderForm(){const previous=last(),initial=!previous;
 $('stockReference').textContent=previous
