@@ -26,7 +26,7 @@
 <section class="card" id="electricTariff"><h2>Τιμή ρεύματος ΔΕΗ Γ1 ανά μήνα</h2>
 <div class="grid"><label class="field">Μήνας χρέωσης<input id="rateMonth" type="month"></label><label class="field">Τιμή προμήθειας (€/kWh)<input id="electricRate" type="text" inputmode="decimal" placeholder="π.χ. 0,16901"></label></div>
 <p id="rateDetails" class="muted"></p><div class="actions"><button id="rateSave" class="secondary">Αποθήκευση τιμής μήνα</button></div><p id="rateStatus" role="status"></p></section>
-<section class="card" id="electric"><h2>Ηλεκτρικό ρεύμα θέρμανσης</h2><p class="muted">Οι δύο κυκλοφορητές υπολογίζονται από τις πραγματικές ώρες των ωρομετρητών. Οι περίοδοι που περνούν σε επόμενο μήνα μοιράζονται αναλογικά με τη διάρκειά τους. Για ακριβή κατανομή, καταχώρισε μέτρηση στην αλλαγή του μήνα. Η εκτίμηση καυστήρα χρησιμοποιεί τον μήνα που έχεις επιλέξει στην τιμή ρεύματος. Οι χρεώσεις αφορούν μόνο την προμήθεια ενέργειας. Δεν προστίθεται αυτόματα στη χρέωση πυρήνας.</p><div class="grid"><div class="stat">Πάνω σπίτι · κόκκινος Grundfos<strong>220 W</strong>2η ταχύτητα</div><div class="stat">Κάτω σπίτι · πράσινος Wilo<strong>72 W</strong>2η ταχύτητα</div></div><details><summary>Ρυθμίσεις και εκτίμηση ρεύματος</summary><div class="grid" style="margin-top:14px"><label class="field">Ώρες κανονικής καύσης ανά ημέρα (εκτίμηση)<input id="burnHoursDay" type="number" min="0" max="24" step="0.1" value="0"></label><label class="field">Ημέρες εκτίμησης καυστήρα<input id="burnDays" type="number" min="1" max="366" step="1" value="30"></label><label class="field">Εκτιμώμενη ηλεκτρική ισχύς κοχλία (W)<input id="screwWatts" type="number" min="0" step="1" value="138"></label><label class="field">Εκτιμώμενη ηλεκτρική ισχύς φυσητήρα στο 33% (W)<input id="fanWatts" type="number" min="0" step="1" value="60"></label><label class="field">Εκτιμώμενη ισχύς πίνακα (W)<input id="panelWatts" type="number" min="0" step="1" value="5"></label><label class="field">Τροφοδοσία κοχλία (δευτ.)<input id="feedSeconds" type="number" min="0.1" step="0.1" value="6"></label><label class="field">Παύση κοχλία (δευτ.)<input id="pauseSeconds" type="number" min="0" step="0.1" value="50"></label><label class="field">Εκκινήσεις / διακοπές καυστήρα ανά ημέρα (εκτίμηση)<input id="startsDay" type="number" min="0" step="1" value="0"></label><label class="field">Συντήρηση φλόγας ανά (ώρες)<input id="maintEvery" type="number" min="0.1" step="0.1" value="2"></label><label class="field">Κοχλίας συντήρησης (δευτ.)<input id="maintScrew" type="number" min="0" step="1" value="5"></label><label class="field">Φυσητήρας συντήρησης (δευτ.)<input id="maintFan" type="number" min="0" step="1" value="15"></label><label class="field">Φύσημα μετά τη διακοπή (δευτ.)<input id="postPurge" type="number" min="0" step="1" value="15"></label></div><p class="notice">Οι αρχικές τιμές 138 W για τον κοχλία, 60 W για τον φυσητήρα και 5 W για τον πίνακα δίνουν εκτίμηση. Αν έχεις αποθηκεύσει άλλες τιμές, έλεγξε τις ενδείξεις στα πεδία. Το 33% του ρυθμιστή δεν ισοδυναμεί κατ’ ανάγκη με 33% της ηλεκτρικής ισχύος. Άφησε τις ώρες καύσης στο 0 όταν δεν έχεις εκτίμηση, για να μη χρεώνεται αυθαίρετα ο καυστήρας.</p><div class="actions"><button id="electricCalc" class="secondary">Υπολογισμός ρεύματος</button><button id="electricSave" class="secondary">Αποθήκευση παραδοχών ρεύματος</button></div><div id="electricResult" class="grid" style="margin-top:14px"></div></details><h3>Ρεύμα κυκλοφορητών ανά κατοικία</h3><div id="homeElectricSummary" class="grid"></div><p class="muted">Η χρέωση περιλαμβάνει τους κυκλοφορητές. Το ρεύμα του κοινού καυστήρα εμφανίζεται ξεχωριστά στις εκτιμήσεις και δεν επιμερίζεται χωρίς επαρκή στοιχεία.</p></section>
+<section class="card" id="electric"><h2>Ρεύμα κυκλοφορητών</h2><p class="muted">Ο υπολογισμός βασίζεται στις ώρες λειτουργίας των ωρομετρητών και στην ονομαστική ισχύ κάθε κυκλοφορητή. Για περιόδους που καλύπτουν δύο μήνες, οι ώρες μοιράζονται αναλογικά. Η πραγματική ηλεκτρική κατανάλωση εξαρτάται από την ισχύ λειτουργίας.</p><div class="grid"><div class="stat">Πάνω κατοικία<strong>220 W</strong>Κόκκινος κυκλοφορητής, 2η ταχύτητα</div><div class="stat">Κάτω κατοικία<strong>72 W</strong>Πράσινος κυκλοφορητής, 2η ταχύτητα</div></div><h3>Κατανάλωση και κόστος ανά κατοικία</h3><div id="homeElectricSummary" class="grid"></div></section>
 
 <footer class="muted">Οι ώρες και η κατανάλωση πρέπει να καλύπτουν ακριβώς το ίδιο χρονικό διάστημα. Το καύσιμο συντήρησης της φλόγας περιλαμβάνεται στη συνολική κατανάλωση και δεν χρεώνεται δεύτερη φορά.</footer></main>
 <script>
@@ -82,7 +82,7 @@ function summaryRange(){
   const hours=Number(selection);
   return between(now.getTime()-hours*3600000,now.getTime()+1);
 }
-function renderAll(){renderForm();$('electricResult').textContent='';const rows=state.entries.filter(e=>!e.initial);
+function renderAll(){renderForm();const rows=state.entries.filter(e=>!e.initial);
 const currentMonth=monthKey(Date.now());
 const months=[...new Set([currentMonth,...state.entries.map(e=>monthKey(e.stamp)),...Object.keys(monthlyPumpHours(rows))])].sort().reverse();
 const selector=$('monthFilter'),selected=selector.value;
@@ -145,8 +145,7 @@ $('historicalReadings').innerHTML='<div class="tablewrap"><table><thead><tr><th>
       +(previous?fmt(reading.down-previous.down)+' ώρες':'Αρχική ένδειξη')+'</td></tr>';
   }).join('')
   +'</tbody></table></div><p class="muted">Η 01/11 στις 10:14 είναι η πρώτη ένδειξη των ωρομετρητών. Η 03/11 στις 20:02 είναι η τελευταία από τις παραπάνω μετρήσεις και το σημείο αναφοράς για το απόθεμα του σιλό.</p>';
-$('history').innerHTML=state.entries.map((e,i)=>!range.includes(e)?'':'<tr><td>'+(e.initial?'Αρχική ένδειξη '+timeLabel(e.stamp):timeLabel(e.from)+' έως '+timeLabel(e.stamp))+'</td><td>'+(e.initial?'Αφετηρία':fmt(e.bags)+' / '+fmt(e.kg))+'</td><td>'+(e.initial?fmt(e.upper)+' (ένδειξη)':fmt(e.upHours))+'</td><td>'+(e.initial?fmt(e.lower)+' (ένδειξη)':fmt(e.downHours))+'</td><td>'+(e.initial?'':fmt(e.upCost))+'</td><td>'+(e.initial?'':fmt(e.downCost))+'</td><td><button class="secondary" data-remove="'+i+'">Διαγραφή</button></td></tr>').join('')||'<tr><td colspan="7">Δεν υπάρχουν μετρήσεις για αυτή την επιλογή.</td></tr>';$('history').querySelectorAll('[data-remove]').forEach(b=>b.addEventListener('click',()=>{const i=Number(b.dataset.remove);if(i!==state.entries.length-1){alert('Για συνέπεια των μετρήσεων διαγράφεται μόνο η τελευταία καταχώριση.');return}if(confirm('Να διαγραφεί η τελευταία καταχώριση;')){state.entries.pop();persist();renderAll();renderPurchases()}}))}function download(name,body,type){const a=document.createElement('a'),u=URL.createObjectURL(new Blob([body],{type}));a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1000)}const EKEY='pyrina_electric_v11';const eIds=['burnHoursDay','burnDays','screwWatts','fanWatts','panelWatts','feedSeconds','pauseSeconds','startsDay','maintEvery','maintScrew','maintFan','postPurge'];try{const saved=JSON.parse(localStorage.getItem(EKEY));if(saved)eIds.forEach(k=>{if(Number.isFinite(saved[k]))$(k).value=saved[k]})}catch(e){}
-const g1Rates={'2026-09':[.14913,.18544],'2026-10':[.15913,.21997],'2026-11':[.16901,.28444]};
+$('history').innerHTML=state.entries.map((e,i)=>!range.includes(e)?'':'<tr><td>'+(e.initial?'Αρχική ένδειξη '+timeLabel(e.stamp):timeLabel(e.from)+' έως '+timeLabel(e.stamp))+'</td><td>'+(e.initial?'Αφετηρία':fmt(e.bags)+' / '+fmt(e.kg))+'</td><td>'+(e.initial?fmt(e.upper)+' (ένδειξη)':fmt(e.upHours))+'</td><td>'+(e.initial?fmt(e.lower)+' (ένδειξη)':fmt(e.downHours))+'</td><td>'+(e.initial?'':fmt(e.upCost))+'</td><td>'+(e.initial?'':fmt(e.downCost))+'</td><td><button class="secondary" data-remove="'+i+'">Διαγραφή</button></td></tr>').join('')||'<tr><td colspan="7">Δεν υπάρχουν μετρήσεις για αυτή την επιλογή.</td></tr>';$('history').querySelectorAll('[data-remove]').forEach(b=>b.addEventListener('click',()=>{const i=Number(b.dataset.remove);if(i!==state.entries.length-1){alert('Για συνέπεια των μετρήσεων διαγράφεται μόνο η τελευταία καταχώριση.');return}if(confirm('Να διαγραφεί η τελευταία καταχώριση;')){state.entries.pop();persist();renderAll();renderPurchases()}}))}function download(name,body,type){const a=document.createElement('a'),u=URL.createObjectURL(new Blob([body],{type}));a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1000)}const g1Rates={'2026-09':[.14913,.18544],'2026-10':[.15913,.21997],'2026-11':[.16901,.28444]};
 function monthlyRate(month){
   const saved=state.electricRates?.[month];
   return Number.isFinite(saved)&&saved>=0?saved:g1Rates[month]?.[0];
@@ -168,7 +167,7 @@ $('rateSave').addEventListener('click',()=>{
     $('rateStatus').textContent='Συμπλήρωσε μήνα και έγκυρη τιμή ανά kWh.';return;
   }
   state.electricRates={...state.electricRates,[month]:rate};
-  persist();renderRate();$('electricResult').textContent='';
+  persist();renderRate();renderAll();
 });
 function monthlyPumpHours(entries){
   const months={};
@@ -227,7 +226,7 @@ function renderCombinedSummary(selectedRows){
     +'<b>Σύνολο: '+(unknownFuel||unknownElectric?'εκκρεμεί':fmt(v.fuel+v.electric)+' €')+'</b></div>';
   $('combinedSummary').innerHTML=card('Πάνω κατοικία',values.up)+card('Κάτω κατοικία',values.down)+card('Και οι δύο κατοικίες',total);
   $('combinedNote').textContent=(includeBaseline?'Περιλαμβάνεται η αρχική εκτιμώμενη κατανάλωση πυρήνας. ':'')
-    +'Το ηλεκτρικό κόστος αφορά μόνο τους κυκλοφορητές των ολοκληρωμένων περιόδων. Δεν περιλαμβάνεται το ρεύμα του κοινού καυστήρα ή άλλες χρεώσεις λογαριασμού. Οι αρχικές ώρες κυκλοφορητών δεν έχουν υπολογιστεί στο ρεύμα.';
+    +'Το ηλεκτρικό κόστος αφορά μόνο τους κυκλοφορητές των ολοκληρωμένων περιόδων. Δεν υπολογίζεται ρεύμα κοχλία, φυσητήρα ή πίνακα, ούτε άλλες χρεώσεις λογαριασμού. Οι αρχικές ώρες κυκλοφορητών δεν έχουν υπολογιστεί στο ρεύμα.';
 }
 function renderHomeElectricSummary(){
   const rows=state.entries.filter(e=>!e.initial);
@@ -244,37 +243,8 @@ function renderHomeElectricSummary(){
   }
   const card=(label,kwh,cost)=>'<div class="stat">'+label+'<strong>'+fmt(kwh)+' kWh</strong>'+(missing?'Εκκρεμεί τιμή ρεύματος μήνα':fmt(cost)+' €')+'</div>';
   const note=!chosen.length?'Δεν υπάρχουν νέες ολοκληρωμένες περίοδοι για το επιλεγμένο διάστημα. Η αρχική περίοδος δεν έχει ακριβείς ώρες κυκλοφορητών.':'Υπολογισμός για '+chosen.length+' ολοκληρωμένες περιόδους.';
-  $('homeElectricSummary').innerHTML=card('Πάνω κατοικία · κυκλοφορητής',totals.up,totals.upCost)+card('Κάτω κατοικία · κυκλοφορητής',totals.down,totals.downCost)+'<p class="muted">'+note+'</p>';
+  $('homeElectricSummary').innerHTML=card('Πάνω κατοικία · κυκλοφορητής',totals.up,totals.upCost)+card('Κάτω κατοικία · κυκλοφορητής',totals.down,totals.downCost)+card('Σύνολο κυκλοφορητών',totals.up+totals.down,totals.upCost+totals.downCost)+'<p class="muted">'+note+'</p>';
 }
-function electricity(){const v=Object.fromEntries(eIds.map(k=>[k,num(k)]));if(eIds.some(k=>!Number.isFinite(v[k])||v[k]<0)||v.maintEvery<=0||v.feedSeconds<=0||v.burnDays<1||v.burnHoursDay>24||v.burnHoursDay*v.burnDays>24*v.burnDays)throw Error('Έλεγξε τις παραδοχές ρεύματος.');const range=summaryRange(),selection=$('monthFilter').value;
-const isMonth=/^\d{4}-\d{2}$/.test(selection);
-const chosen=state.entries.filter(e=>!e.initial&&(isMonth||range.includes(e)));
-const breakdown=Object.entries(monthlyPumpHours(chosen))
-  .filter(([month])=>!isMonth||month===selection)
-  .sort(([a],[b])=>a.localeCompare(b));
-const upH=breakdown.reduce((total,[,hours])=>total+hours.up,0);
-const downH=breakdown.reduce((total,[,hours])=>total+hours.down,0);
-const upKwh=upH*.220,downKwh=downH*.072;
-const missing=breakdown.some(([month,hours])=>monthlyRate(month)===undefined&&(hours.up>0||hours.down>0));
-const cost=(house,watts)=>missing?undefined:breakdown.reduce((total,[month,hours])=>total+hours[house]*watts*(monthlyRate(month)??0),0);
-const upCost=cost('up',.220),downCost=cost('down',.072);
-const burnH=v.burnHoursDay*v.burnDays,feedFraction=v.feedSeconds/(v.feedSeconds+v.pauseSeconds),idleH=24*v.burnDays-burnH,maintenance=idleH/v.maintEvery;const screwH=burnH*feedFraction+maintenance*v.maintScrew/3600,fanH=burnH+maintenance*v.maintFan/3600+v.startsDay*v.burnDays*v.postPurge/3600;const screwKwh=screwH*v.screwWatts/1000,fanKwh=fanH*v.fanWatts/1000,panelKwh=24*v.burnDays*v.panelWatts/1000;const burnerKwh=screwKwh+fanKwh+panelKwh;const show=(name,kwh,price,detail)=>'<div class="stat">'+name+'<strong>'+fmt(kwh)+' kWh</strong>'+(price===undefined?'Λείπει τιμή μήνα':fmt(price)+' €')+detail+'</div>';
-const burnerMonth=$('rateMonth').value;
-const burnerRate=monthlyRate(burnerMonth);
-const burnerPrice=kwh=>burnerRate===undefined?undefined:kwh*burnerRate;
-$('electricResult').innerHTML=show('Πάνω κυκλοφορητής',upKwh,upCost,' · '+fmt(upH)+' ώρες')
-  +show('Κάτω κυκλοφορητής',downKwh,downCost,' · '+fmt(downH)+' ώρες')
-  +show('Σύνολο κυκλοφορητών',upKwh+downKwh,missing?undefined:upCost+downCost,'')
-  +breakdown.map(([month,hours])=>{
-    const rate=monthlyRate(month),kwh=hours.up*.220+hours.down*.072;
-    return show(month,kwh,rate===undefined?undefined:kwh*rate,rate===undefined?'':' · '+fmt(rate,5)+' €/kWh');
-  }).join('')
-  +(burnH>0?show('Κοινός καυστήρας, εκτίμηση '+esc(burnerMonth),burnerKwh,burnerPrice(burnerKwh),' · '+fmt(burnH)+' ώρες καύσης σε '+fmt(v.burnDays,0)+' ημέρες')
-    +show('Μοτέρ κοχλία',screwKwh,burnerPrice(screwKwh),'')
-    +show('Φυσητήρας',fanKwh,burnerPrice(fanKwh),'')
-    +show('Πίνακας',panelKwh,burnerPrice(panelKwh),''):'');
-} $('electricCalc').addEventListener('click',()=>{try{electricity()}catch(e){$('electricResult').textContent=e.message}});$('electricSave').addEventListener('click',()=>{const obj=Object.fromEntries(eIds.map(k=>[k,num(k)]));if(Object.values(obj).some(v=>!Number.isFinite(v)||v<0)){alert('Έλεγξε τις τιμές ρεύματος');return}localStorage.setItem(EKEY,JSON.stringify(obj));notifySync();electricity();alert('Οι παραδοχές ρεύματος αποθηκεύτηκαν.')});
-
 // Ιστορικό αγορών με παραστατικά. Διατήρηση των ήδη αποθηκευμένων μετρήσεων.
 const buyFields=['buyDate','buyInvoice','buySupplier','buyType','buyKg','buyBags','buyCost','buyTransport','buyLabor','buyNotes'];
 const parseBuy=v=>Number(String(v).trim().replace(/\s/g,'').replace(/\.(?=\d{3}(?:\D|$))/g,'').replace(',','.'));
