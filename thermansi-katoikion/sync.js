@@ -1,6 +1,6 @@
 import {initializeApp} from 'https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js';
 import {getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut} from 'https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js';
-import {doc, getFirestore, onSnapshot, runTransaction} from 'https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js';
+import {doc, initializeFirestore, onSnapshot, runTransaction} from 'https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js';
 
 const app = initializeApp({
   apiKey: 'AIzaSyBl6OnyMUDR0ov9KUxX5rJ0qfE2P_xzpJA',
@@ -9,7 +9,7 @@ const app = initializeApp({
   appId: '1:601244953831:web:93514b1d314b4db97a0642'
 });
 const auth = getAuth(app);
-const db = getFirestore(app);
+const db = initializeFirestore(app, {experimentalForceLongPolling: true});
 
 export function connectSync({read, apply, backup}) {
   const el = id => document.getElementById(id);
@@ -47,13 +47,24 @@ export function connectSync({read, apply, backup}) {
     };
     session = current;
     show('Έλεγχος κοινών καταχωρίσεων…');
-    unsubscribe = onSnapshot(current.ref, {includeMetadataChanges:true}, snap => {
+    const timeout = setTimeout(() => {
+      if (session === current && current.remote === undefined) {
+        show('Το Firebase δεν απάντησε. Οι αλλαγές φυλάσσονται στη συσκευή.', {retry:true});
+      }
+    }, 15000);
+    const stop = onSnapshot(current.ref, {includeMetadataChanges:true}, snap => {
       if (session !== current || snap.metadata.fromCache || snap.metadata.hasPendingWrites) return;
+      clearTimeout(timeout);
       current.remote = snap.exists() ? snap.get('payload') : null;
       reconcile();
     }, () => {
+      clearTimeout(timeout);
       if (session === current) show('Δεν υπάρχει πρόσβαση στις κοινές καταχωρίσεις. Τα δεδομένα μένουν στη συσκευή.', {retry:true});
     });
+    unsubscribe = () => {
+      clearTimeout(timeout);
+      stop();
+    };
   }
 
   function remember(current, payload) {
